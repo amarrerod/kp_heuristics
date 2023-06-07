@@ -4,8 +4,8 @@ mod knapsack;
 use knapsack::Knapsack;
 
 fn main() {
-    let n: u32 = 10;
-    let mut knapsack = Knapsack::new(n, Some(100), None);
+    let n: u32 = 100;
+    let mut knapsack = Knapsack::new(n, Some(500), None);
     let _ = knapsack.create_random_items(1, 100);
 
     println!("Knapsack: {:?}", knapsack);
@@ -24,6 +24,12 @@ fn main() {
 
     let result_miw: Result<knapsack::Solution, ()> = heuristic::miw(&knapsack, false);
     if let Ok(solution) = result_miw {
+        println!("{:?}", solution);
+        assert!(solution.weight <= knapsack.capacity);
+    }
+
+    let result_mpw: Result<knapsack::Solution, ()> = heuristic::mpw(&knapsack, false);
+    if let Ok(solution) = result_mpw {
         println!("{:?}", solution);
         assert!(solution.weight <= knapsack.capacity);
     }
